@@ -14,7 +14,7 @@ Statistical analysis of VKontakte and Telegram message history.
 
 ### Usage
 #### Execution
-* Run `python setup.py`
+* Run `python main.py`
 * Follow GUI commands
 
 #### Telegram messages
