@@ -6,6 +6,8 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import wordcloud as wc
+import matplotlib
+matplotlib.use("TkAgg")
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import matplotlib.colors as mpl_colors
@@ -57,13 +59,13 @@ def heat_map(msgs, path_to_save, seasons=False):
     if seasons:  # divides heatmap on seasons
         season_lines = [i for i, m in enumerate(months) if m.month % 3 == 0 and i != 0]
         ax.hlines(season_lines, *ax.get_xlim(), colors=["b"])
-    ax.set(xlabel='day', ylabel="month")
+    ax.set(xlabel="day", ylabel="month")
     ax.margins(x=0)
 
     plt.tight_layout()
     fig = plt.gcf()
     fig.set_size_inches(11, 8)
-    fig.savefig(os.path.join(path_to_save, heat_map.__name__ + ".png"), dpi=600)
+    fig.savefig(os.path.join(path_to_save, heat_map.__name__ + ".png"), dpi=500)
 
     # plt.show()
     plt.close("all")
@@ -93,7 +95,7 @@ def pie_messages_per_author(msgs, your_name, target_name, path_to_save):
 
     plt.setp(autotexts, size=10, weight="bold")
 
-    fig.savefig(os.path.join(path_to_save, pie_messages_per_author.__name__ + ".png"), dpi=600)
+    fig.savefig(os.path.join(path_to_save, pie_messages_per_author.__name__ + ".png"), dpi=500)
     # plt.show()
     plt.close("all")
     log_line(f"{pie_messages_per_author.__name__} was created.")
@@ -203,7 +205,7 @@ def stackplot_non_text_messages_percentage(msgs, path_to_save):
     fig = plt.gcf()
     fig.set_size_inches(11, 8)
 
-    fig.savefig(os.path.join(path_to_save, stackplot_non_text_messages_percentage.__name__ + ".png"), dpi=600)
+    fig.savefig(os.path.join(path_to_save, stackplot_non_text_messages_percentage.__name__ + ".png"), dpi=500)
     # plt.show()
     log_line(f"{stackplot_non_text_messages_percentage.__name__} was created.")
     plt.close("all")
@@ -243,7 +245,7 @@ def barplot_non_text_messages(msgs, path_to_save):
     fig = plt.gcf()
     fig.set_size_inches(16, 8)
 
-    fig.savefig(os.path.join(path_to_save, barplot_non_text_messages.__name__ + ".png"), dpi=600)
+    fig.savefig(os.path.join(path_to_save, barplot_non_text_messages.__name__ + ".png"), dpi=500)
     # plt.show()
     log_line(f"{barplot_non_text_messages.__name__} was created.")
     plt.close("all")
@@ -272,7 +274,7 @@ def barplot_messages_per_day(msgs, path_to_save):
 
     fig = plt.gcf()
     fig.set_size_inches(20, 10)
-    fig.savefig(os.path.join(path_to_save, barplot_messages_per_day.__name__ + ".png"), dpi=600)
+    fig.savefig(os.path.join(path_to_save, barplot_messages_per_day.__name__ + ".png"), dpi=500)
 
     # plt.show()
     log_line(f"{barplot_messages_per_day.__name__} was created.")
@@ -305,7 +307,7 @@ def barplot_messages_per_minutes(msgs, path_to_save, minutes=2):
     fig = plt.gcf()
     fig.set_size_inches(20, 10)
 
-    fig.savefig(os.path.join(path_to_save, barplot_messages_per_minutes.__name__ + ".png"), dpi=600)
+    fig.savefig(os.path.join(path_to_save, barplot_messages_per_minutes.__name__ + ".png"), dpi=500)
     # plt.show()
     log_line(f"{barplot_messages_per_minutes.__name__} was created.")
     plt.close("all")
@@ -336,7 +338,7 @@ def barplot_words(msgs, your_name, target_name, words, topn, path_to_save):
     fig = plt.gcf()
     fig.set_size_inches(14, 8)
 
-    fig.savefig(os.path.join(path_to_save, barplot_words.__name__ + ".png"), dpi=600)
+    fig.savefig(os.path.join(path_to_save, barplot_words.__name__ + ".png"), dpi=500)
     # plt.show()
     log_line(f"{barplot_words.__name__} was created.")
     plt.close("all")
@@ -370,7 +372,7 @@ def barplot_emojis(msgs, your_name, target_name, topn, path_to_save):
     fig.set_size_inches(11, 8)
     plt.tight_layout()
 
-    fig.savefig(os.path.join(path_to_save, barplot_emojis.__name__ + ".png"), dpi=600)
+    fig.savefig(os.path.join(path_to_save, barplot_emojis.__name__ + ".png"), dpi=500)
     # plt.show()
     log_line(f"{barplot_emojis.__name__} was created.")
     plt.close("all")
@@ -397,7 +399,7 @@ def barplot_messages_per_weekday(msgs, your_name, target_name, path_to_save):
     fig = plt.gcf()
     fig.set_size_inches(11, 8)
 
-    fig.savefig(os.path.join(path_to_save, barplot_messages_per_weekday.__name__ + ".png"), dpi=600)
+    fig.savefig(os.path.join(path_to_save, barplot_messages_per_weekday.__name__ + ".png"), dpi=500)
     # plt.show()
     log_line(f"{barplot_messages_per_weekday.__name__} was created.")
     plt.close("all")
@@ -416,7 +418,7 @@ def distplot_messages_per_hour(msgs, path_to_save):
     fig = plt.gcf()
     fig.set_size_inches(11, 8)
 
-    fig.savefig(os.path.join(path_to_save, distplot_messages_per_hour.__name__ + ".png"), dpi=600)
+    fig.savefig(os.path.join(path_to_save, distplot_messages_per_hour.__name__ + ".png"), dpi=500)
     # plt.show()
     log_line(f"{distplot_messages_per_hour.__name__} was created.")
     plt.close("all")
@@ -436,7 +438,7 @@ def distplot_messages_per_day(msgs, path_to_save):
     fig = plt.gcf()
     fig.set_size_inches(11, 8)
 
-    fig.savefig(os.path.join(path_to_save, distplot_messages_per_day.__name__ + ".png"), dpi=600)
+    fig.savefig(os.path.join(path_to_save, distplot_messages_per_day.__name__ + ".png"), dpi=500)
     # plt.show()
     log_line(f"{distplot_messages_per_day.__name__} was created.")
     plt.close("all")
@@ -459,7 +461,7 @@ def distplot_messages_per_month(msgs, path_to_save):
     fig = plt.gcf()
     fig.set_size_inches(11, 8)
 
-    fig.savefig(os.path.join(path_to_save, distplot_messages_per_month.__name__ + ".png"), dpi=600)
+    fig.savefig(os.path.join(path_to_save, distplot_messages_per_month.__name__ + ".png"), dpi=500)
     # plt.show()
     log_line(f"{distplot_messages_per_month.__name__} was created.")
     plt.close("all")
@@ -489,7 +491,7 @@ def lineplot_message_length(msgs, your_name, target_name, path_to_save):
     fig = plt.gcf()
     fig.set_size_inches(13, 7)
 
-    fig.savefig(os.path.join(path_to_save, lineplot_message_length.__name__ + ".png"), dpi=600)
+    fig.savefig(os.path.join(path_to_save, lineplot_message_length.__name__ + ".png"), dpi=500)
     # plt.show()
     plt.close("all")
     log_line(f"{lineplot_message_length.__name__} was created.")
@@ -519,7 +521,7 @@ def lineplot_messages(msgs, your_name, target_name, path_to_save):
     fig = plt.gcf()
     fig.set_size_inches(13, 7)
 
-    fig.savefig(os.path.join(path_to_save, lineplot_messages.__name__ + ".png"), dpi=600)
+    fig.savefig(os.path.join(path_to_save, lineplot_messages.__name__ + ".png"), dpi=500)
     # plt.show()
     plt.close("all")
     log_line(f"{lineplot_messages.__name__} was created.")
