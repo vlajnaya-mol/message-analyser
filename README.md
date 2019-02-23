@@ -10,7 +10,7 @@ Statistical analysis of VKontakte and Telegram message history.
 ### Installation
 * Use Python3.6. 3.7 version may not work properly.
 * `git clone https://github.com/vlajnaya-mol/message-analyser`
-* Install `requirements.txt`
+* Install `requirements.txt`. (`pip install -r /path/to/requirements.txt`)
 
 ### Usage
 #### Execution
