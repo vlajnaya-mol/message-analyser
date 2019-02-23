@@ -28,7 +28,7 @@ Statistical analysis of VKontakte and Telegram message history.
   
   ```
   %username% (%date%):
-  message%
+  %message%
   
   HH:MM:ss  dd/mm/yyyy
   ```
