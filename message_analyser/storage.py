@@ -74,6 +74,13 @@ def store_msgs(file_path, msgs):
     log_line(f"{len(msgs)} messages were stored in {file_path} file.")
 
 
+def store_top_words_count(words, your_words_cnt, target_words_cnt, file_path):
+    with open(file_path, 'w', encoding="utf-8") as fp:
+        fp.write("Word, You sent, Target sent, Total\n")
+        for word in words:
+            fp.write(f"{word}, {your_words_cnt[word]}, {target_words_cnt[word]}, "
+                     f"{your_words_cnt[word]+target_words_cnt[word]}\n")
+
 def get_msgs(file_path):
     with open(file_path, 'r') as f:
         msgs = [MyMessage.from_dict(msg) for msg in json.loads(f.read())]

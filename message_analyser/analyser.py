@@ -167,7 +167,15 @@ async def _get_all_messages(dialog, vkopt_file, your_name, target_name, loop):
     return msgs
 
 
-async def _analyse(msgs, your_name, target_name, words_file, store_msgs=True):
+def _save_words(msgs, your_name, target_name, path):
+    total_words_cnt = stools.get_words_countered(msgs)
+    top_words = [w for w, c in total_words_cnt.most_common(1000)]
+    your_words_cnt = stools.get_words_countered([msg for msg in msgs if msg.author == your_name])
+    target_words_cnt = stools.get_words_countered([msg for msg in msgs if msg.author == target_name])
+    storage.store_top_words_count(top_words, your_words_cnt, target_words_cnt, path)
+
+
+async def _analyse(msgs, your_name, target_name, words_file, store_msgs=True, store_words=True):
     """Does analysis and stores results."""
     log_line("Start messages analysis process.")
 
@@ -186,6 +194,9 @@ async def _analyse(msgs, your_name, target_name, words_file, store_msgs=True):
     if store_msgs:
         file_with_msgs = "messages.txt"
         storage.store_msgs(os.path.join(results_directory, file_with_msgs), msgs)
+    if store_words:
+        file_with_words = "words.txt"
+        _save_words(msgs, your_name, target_name, os.path.join(results_directory, file_with_words))
 
     await asyncio.sleep(delay)
 
