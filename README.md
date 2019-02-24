@@ -33,6 +33,7 @@ Statistical analysis of VKontakte and Telegram message history.
   
   HH:MM:ss  dd/mm/yyyy
   ```
+* You can concatenate two VkOpt files and use as one
 * Include this file in the analysis process
 
 #### Words
