@@ -161,8 +161,7 @@ async def _get_all_messages(dialog, vkopt_file, your_name, target_name, loop):
     await  asyncio.sleep(delay)
     if vkopt_file:
         msgs.extend(vkOpt.get_mymessages_from_file(your_name, target_name, vkopt_file))
-    await  asyncio.sleep(delay)
-    if dialog != -1 and vkopt_file:
+        await  asyncio.sleep(delay)
         msgs.sort(key=lambda msg: msg.date)
     await  asyncio.sleep(delay)
     return msgs
