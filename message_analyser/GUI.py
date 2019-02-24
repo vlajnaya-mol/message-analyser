@@ -98,7 +98,7 @@ class MessageAnalyserGUI(tk.Frame):
     def __set_file_path(self, label_text, file):
         """Stores file path in session parameters and changes the corresponding label text."""
         self.session_params[file] = filedialog.askopenfilename(title=file, filetypes=[("Text files", ".txt")])
-        label_text.set("Directory : " + os.path.split(self.session_params[file])[-1])
+        label_text.set("File :          " + os.path.split(self.session_params[file])[-1])
 
     def raise_start_frame(self):
         """Chooses base analyser parameters (do or do not analyse Telegram messages/vk.com messages/words)."""
@@ -157,7 +157,7 @@ class MessageAnalyserGUI(tk.Frame):
         cur_row = 0
         if self.session_params["from_vk"]:
             cur_row += 1
-            vkopt_label = tk.Label(table_frame, text="Choose directory of :", height=2, font=self.default_font)
+            vkopt_label = tk.Label(table_frame, text="Choose path to:", height=2, font=self.default_font)
             vkopt_label.grid(row=cur_row, column=1, sticky=tk.W)
 
             vkopt_button = tk.Button(table_frame, text="vkOpt file",
@@ -167,14 +167,14 @@ class MessageAnalyserGUI(tk.Frame):
 
             cur_row += 1
             vkopt_filename_label_text = tk.StringVar()
-            vkopt_filename_label_text.set("Directory : ")
+            vkopt_filename_label_text.set("File :          ")
             vkopt_filename_label = tk.Label(table_frame, textvariable=vkopt_filename_label_text, height=2,
                                             font=self.default_font)
             vkopt_filename_label.grid(row=cur_row, column=1, sticky=tk.W, columnspan=30)
 
         if self.session_params["plot_words"]:
             cur_row += 1
-            words_label = tk.Label(table_frame, text="Choose directory of :", height=2, font=self.default_font)
+            words_label = tk.Label(table_frame, text="Choose path to:", height=2, font=self.default_font)
             words_label.grid(row=cur_row, column=1, sticky=tk.W)
 
             words_button = tk.Button(table_frame, text="words file",
@@ -184,7 +184,7 @@ class MessageAnalyserGUI(tk.Frame):
 
             cur_row += 1
             words_filename_label_text = tk.StringVar()
-            words_filename_label_text.set("Directory :          ")
+            words_filename_label_text.set("File :          ")
             words_filename_label = tk.Label(table_frame, textvariable=words_filename_label_text, height=2,
                                             font=self.default_font)
             words_filename_label.grid(row=cur_row, column=1, sticky=tk.W, columnspan=30)
@@ -192,7 +192,7 @@ class MessageAnalyserGUI(tk.Frame):
         _, _, _, your_name, target_name = storage.get_session_params()
 
         cur_row += 1
-        your_name_label = tk.Label(table_frame, text="Your name :          ", height=2, font=self.default_font)
+        your_name_label = tk.Label(table_frame, text="Your name:     ", height=2, font=self.default_font)
         your_name_label.grid(row=cur_row, column=1, sticky=tk.W)
 
         your_name_dir = tk.Entry(table_frame, width=40, font=self.default_font)
@@ -200,7 +200,7 @@ class MessageAnalyserGUI(tk.Frame):
         your_name_dir.grid(row=cur_row, column=2)
 
         cur_row += 1
-        target_name_label = tk.Label(table_frame, text="Target's name :      ", height=2, font=self.default_font)
+        target_name_label = tk.Label(table_frame, text="Target's name: ", height=2, font=self.default_font)
         target_name_label.grid(row=cur_row, column=1, sticky=tk.W)
 
         target_name_dir = tk.Entry(table_frame, width=40, font=self.default_font)
