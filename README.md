@@ -36,7 +36,7 @@ Statistical analysis of VKontakte and Telegram message history.
 
 #### Words
 * Write words You are interested in to a file
-* Be shure words are saved correctly. Cyrillic words are ruined by saving in ASCII format. 
+* Be sure words are saved correctly. Cyrillic words are ruined by saving in ASCII format. 
 * Include this file in the analysis process
 
 #### Manual analysis
