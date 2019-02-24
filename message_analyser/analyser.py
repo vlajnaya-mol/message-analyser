@@ -149,7 +149,8 @@ async def _plot_all(msgs, your_name, target_name, results_directory, words_file)
     await asyncio.sleep(delay)
     if words_file:
         words = storage.get_words(words_file)
-        await _plot_words_distribution(filtered_msgs, your_name, target_name, results_directory, words)
+        if words:
+            await _plot_words_distribution(filtered_msgs, your_name, target_name, results_directory, words)
         await asyncio.sleep(delay)
 
 

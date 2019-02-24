@@ -7,6 +7,7 @@ import pandas as pd
 import seaborn as sns
 import wordcloud as wc
 import matplotlib
+
 matplotlib.use("TkAgg")
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
@@ -534,6 +535,11 @@ def wordcloud(msgs, words, path_to_save):
     for word in set(words):
         all_words_list.extend([word] * (words_cnt[word]))
     random.shuffle(all_words_list, random.random)  # don't forget to shuffle !
+
+    if not all_words_list:
+        log_line("No such words were found in message history.")
+        return
+
     all_words_string = ' '.join(all_words_list)
 
     # the cloud will be a circle.

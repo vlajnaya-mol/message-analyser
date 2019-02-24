@@ -90,6 +90,7 @@ def get_msgs(file_path):
 
 def get_words(file_path):
     with open(file_path, 'r', encoding="utf-8-sig") as f:
-        words = [word.strip() for word in f.readlines()]
+        words = [word.strip() for word in f.readlines()
+                 if all([ch.isalpha() or ch == '\'' or ch == '`' for ch in word.strip()])]
     log_line(f"{len(words)} words were received from {file_path} file.")
     return words
