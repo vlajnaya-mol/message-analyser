@@ -19,6 +19,7 @@ Statistical analysis of VKontakte and Telegram message history.
 
 #### Telegram messages
 * You need API Hash and API ID from [here](https://core.telegram.org/api/obtaining_api_id)
+* Be sure to use proxy if Telegram is blocked in your country.
 
 #### VKontakte messages
 * Install [VkOpt extension](http://vkopt.net/)
