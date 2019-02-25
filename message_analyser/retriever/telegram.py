@@ -2,7 +2,8 @@ import message_analyser.storage as storage
 from dateutil.relativedelta import relativedelta
 from telethon import TelegramClient  # , sync
 from telethon.tl.types import Message
-from telethon.errors.rpcerrorlist import ApiIdInvalidError, PhoneNumberInvalidError, PhoneCodeInvalidError
+from telethon.errors.rpcerrorlist import ApiIdInvalidError, PhoneNumberInvalidError, PhoneCodeInvalidError, \
+    SessionPasswordNeededError, PasswordHashInvalidError, FloodWaitError
 from message_analyser.myMessage import MyMessage
 from message_analyser.misc import log_line, time_offset
 
@@ -24,7 +25,7 @@ async def get_str_dialogs(client=None, loop=None):
     return [f"{dialog.name} (id={dialog.id})" for dialog in await _get_dialogs(client, loop)]
 
 
-async def get_sign_in_results(api_id, api_hash, code, phone_number, session_name, loop=None):
+async def get_sign_in_results(api_id, api_hash, code, phone_number, password, session_name, loop=None):
     """Tries to sign-in in Telegram with given parameters.
 
     Notes: Automatically creates .session file for further sign-ins.
@@ -34,6 +35,7 @@ async def get_sign_in_results(api_id, api_hash, code, phone_number, session_name
         api_hash (str): Telegram API hash.
         code (str/int): A confirmation code.
         phone_number (str): A phone number connected to such id/hash pair.
+        password (str): 2FA password (if needed).
         session_name (str): A name of the current session.
         loop (asyncio.windows_events._WindowsSelectorEventLoop, optional): An event loop.
 
@@ -52,7 +54,10 @@ async def get_sign_in_results(api_id, api_hash, code, phone_number, session_name
     try:
         if not await client.is_user_authorized():
             await client.send_code_request(phone_number)
-            await client.sign_in(phone_number, code)
+            try:
+                await client.sign_in(phone_number, code)
+            except SessionPasswordNeededError:
+                await client.sign_in(phone_number, password=password)
         if not await client.is_user_authorized():
             raise PhoneCodeInvalidError(request=None)
     except ApiIdInvalidError:
@@ -61,9 +66,15 @@ async def get_sign_in_results(api_id, api_hash, code, phone_number, session_name
     except PhoneCodeInvalidError:
         log_line("Unsuccessful sign-in! Need code.")
         return "need code"
+    except PasswordHashInvalidError:
+        log_line("Unsuccessful sign-in! Need password.")
+        return "need password"
     except (PhoneNumberInvalidError, TypeError):
         log_line("Unsuccessful sign-in! Need phone.")
         return "need phone"
+    except FloodWaitError as err:
+        log_line(f'Unsuccessful sign-in! {err.message}')
+        return f'need wait for {err.seconds}'
     finally:
         if client.is_connected():
             await client.disconnect()
