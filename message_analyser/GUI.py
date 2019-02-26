@@ -255,7 +255,9 @@ class MessageAnalyserGUI(tk.Frame):
         assert self.session_params["from_telegram"]
 
         api_id, api_hash, phone_number, _ = storage.get_telegram_secrets()
-
+        
+        # A text in labels should be 15 characters long in order to not shift entries. 
+        # Should make them more adaptive some day.
         api_id_label = tk.Label(table_frame, text="API id :       ", height=2, font=self.default_font)
         api_id_label.grid(row=1, column=1, sticky=tk.W)
 
@@ -283,7 +285,7 @@ class MessageAnalyserGUI(tk.Frame):
         code_dir = tk.Entry(table_frame, width=46, font=self.default_font)
         code_dir.grid(row=4, column=2, sticky=tk.W)
 
-        password_label = tk.Label(table_frame, text="Password :         ", height=2, font=self.default_font)
+        password_label = tk.Label(table_frame, text="Password :     ", height=2, font=self.default_font)
         password_label.grid(row=5, column=1, sticky=tk.W)
 
         password_dir = tk.Entry(table_frame, width=46, font=self.default_font)
