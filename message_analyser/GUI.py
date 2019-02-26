@@ -283,6 +283,12 @@ class MessageAnalyserGUI(tk.Frame):
         code_dir = tk.Entry(table_frame, width=46, font=self.default_font)
         code_dir.grid(row=4, column=2, sticky=tk.W)
 
+        password_label = tk.Label(table_frame, text="Password :         ", height=2, font=self.default_font)
+        password_label.grid(row=5, column=1, sticky=tk.W)
+
+        password_dir = tk.Entry(table_frame, width=46, font=self.default_font)
+        password_dir.grid(row=5, column=2, sticky=tk.W)
+
         message_label_text = tk.StringVar()
 
         message_label_text.set(("Please be sure You have set the right API ID and key\n"
@@ -290,13 +296,14 @@ class MessageAnalyserGUI(tk.Frame):
                                 "https://core.telegram.org/api/obtaining_api_id"))
         message_label = tk.Label(table_frame, textvariable=message_label_text, height=3,
                                  font=self.default_font, fg="red", justify="left")
-        message_label.grid(row=5, column=1, sticky=tk.W, columnspan=2)
+        message_label.grid(row=6, column=1, sticky=tk.W, columnspan=2)
 
         async def try_sign_in_and_continue():
             res = await tlg.get_sign_in_results(api_id_dir.get(),
                                                 api_hash_dir.get(),
                                                 code_dir.get(),
                                                 phone_number_dir.get(),
+                                                password_dir.get(),
                                                 self.session_params["your_name"],
                                                 loop=self.aio_loop)
             try:
@@ -306,6 +313,7 @@ class MessageAnalyserGUI(tk.Frame):
             api_hash_label.config(fg="black")
             phone_number_label.config(fg="black")
             code_label.config(fg="black")
+            password_label.config(fg="black")
             if res == "wrong api":
                 api_id_label.config(fg="red")
                 api_hash_label.config(fg="red")
@@ -321,6 +329,11 @@ class MessageAnalyserGUI(tk.Frame):
                 code_label.config(fg="red")
                 return message_label_text.set("Please check Your private messages (or SMS) and      \n"
                                               "copypaste the right code.\n ")
+            elif res == "need password":
+                password_label.config(fg="red")
+                return message_label_text.set("Please enter correct password.\n")
+            elif res.startswith("need wait for "):
+                return message_label_text.set(f'Please wait. A wait of {res[14:]} seconds is required.\n')
             elif res == "no internet":
                 return message_label_text.set("Please be sure You have stable Internet connection.\n\n")
 
