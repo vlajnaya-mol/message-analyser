@@ -1,3 +1,4 @@
+import asyncio
 import message_analyser.storage as storage
 from dateutil.relativedelta import relativedelta
 from telethon import TelegramClient  # , sync
@@ -120,10 +121,13 @@ async def _retrieve_messages(client, target_entity, num):
         offset_id = batch[-1].id
         msgs.extend([msg for msg in batch if isinstance(msg, Message)])
         try:
-            batch = await client.get_messages(target_entity, limit=min(batch_size, num - len(msgs)), offset_id=offset_id)
+            batch = await asyncio.wait_for(client.get_messages(target_entity, limit=min(batch_size, num - len(msgs)), offset_id=offset_id), 10*60)
         except ConnectionError:
             log_line("Internet connection was lost.")
             raise
+        except asyncio.TimeoutError:
+            log_line("Telegram timeout error.")
+            break
         if not len(batch):
             log_line(f"{len(msgs[:num])} (100%) messages received.")
         else:
