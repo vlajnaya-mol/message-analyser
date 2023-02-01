@@ -191,7 +191,7 @@ def _telethon_msg_to_mymessage(msg, target_id, your_name, target_name):
     """
     return MyMessage(msg.message + (msg.sticker.attributes[1].alt if msg.sticker is not None else ''),
                      msg.date.replace(tzinfo=None) + relativedelta(hours=time_offset(msg.date)),
-                     target_name if msg.from_id == target_id else your_name,
+                     your_name if msg.from_id else target_name,
                      is_forwarded=msg.forward is not None,
                      document_id=msg.document.id if msg.document is not None else None,
                      has_sticker=msg.sticker is not None,
